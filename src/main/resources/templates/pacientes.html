@@ -1,0 +1,46 @@
+<DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Psi Consulta - Pacientes</title>
+	<!-- CSS and JS Bootstrp -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header>
+	<nav class="navbar sticky-top navbar-light bg-light">
+ 		<a class="navbar-brand" href="#">Psi Consulta - Pacientes</a>
+ 		<a href="/newpaciente" class="btn btn-primary" role="button">Novo Paciente</a>
+	</nav>
+</header>
+
+<section>
+	<div class="container" style="width: 60%; padding-bottom: 30px;">
+		
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item active" aria-current="page">Pacientes</li>
+		  </ol>
+		</nav>
+		
+		<div class="card" th:each="paciente : ${pacientes}">
+		  <div class="card-header">
+		    <span th:text="${paciente.nomeCompleto}"></span>  - 
+		    Cod.: <span th:text="${paciente.codigoPaciente}"></span>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">
+		    	<span th:text="${paciente.email}"></span>
+		    </h5>
+		    <p class="card-text" th:utext="${#strings.abbreviate(paciente.prontuario, 400)}"></p>
+		    <a th:href="${(#mvc.url('CC#getPacienteDetails').arg(0, paciente.id)).build()}" class="btn btn-primary">Mais informações</a>
+		  </div>
+		</div>
+	
+	</div>		
+</section>
+
+</body>
+</html>
