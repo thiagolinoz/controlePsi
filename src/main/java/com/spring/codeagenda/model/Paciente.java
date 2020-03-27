@@ -40,7 +40,7 @@ public class Paciente {
 	@Lob
 	private String prontuario;
 	
-	@Column(columnDefinition = "booelan default false")
+	@Column(columnDefinition = "boolean default false")
 	private boolean desativo;
 
 	public Long getId() {
