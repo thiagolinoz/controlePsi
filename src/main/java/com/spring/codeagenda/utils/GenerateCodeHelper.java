@@ -1,5 +1,8 @@
 package com.spring.codeagenda.utils;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GenerateCodeHelper {
 	
 	public String sumNumberInString(String codigo) {

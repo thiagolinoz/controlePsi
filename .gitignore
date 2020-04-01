@@ -34,4 +34,8 @@ build/
 /test-output
 
 ### ignore config file
-.src/main/resources/application.properties
+/src/main/resources/application.properties
+
+### ignore logs folders
+/src/main/resources/logs/
+
