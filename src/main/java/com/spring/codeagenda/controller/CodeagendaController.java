@@ -59,12 +59,12 @@ public class CodeagendaController {
 	@RequestMapping(value = "/newpaciente", method = RequestMethod.POST)
 	public String savePaciente(@Valid Paciente paciente, BindingResult result, RedirectAttributes attributes) {
 		
-		String novoCodigo = createNewCode.novoCodigo();
-
 		if(result.hasErrors()) {
-			loggerInfo.LogErrorFile(logger, result);
+			loggerInfo.LogErrorFile(logger, result.getFieldErrors().toString());
+			return "redirect:/pacientes";
 		}
 		
+		String novoCodigo = createNewCode.novoCodigo();
 		paciente.setCodigoPaciente(novoCodigo);
 		codeagendaService.save(paciente);
 		

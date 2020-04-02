@@ -12,7 +12,6 @@ public class GenerateCodeHelperTests {
 	
 	@BeforeEach
 	public void codeHelperInstance () {
-		
 		this.newCodeObj = new GenerateCodeHelper();
 		this.newCode = newCodeObj.sumNumberInString("A0000002");
 	}
