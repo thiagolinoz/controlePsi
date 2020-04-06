@@ -21,7 +21,6 @@ public class Paciente {
 	@NotBlank
 	private String nomeCompleto;
 	
-	@NotBlank
 	private String codigoPaciente;
 	
 	private String endereco;
@@ -40,7 +39,6 @@ public class Paciente {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate dataNascimento;
 	
-	@NotBlank
 	@Lob
 	private String prontuario;
 	
