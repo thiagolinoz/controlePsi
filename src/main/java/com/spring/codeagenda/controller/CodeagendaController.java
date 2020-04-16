@@ -1,7 +1,6 @@
 package com.spring.codeagenda.controller;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -19,6 +18,8 @@ import com.spring.codeagenda.service.CodeagendaService;
 import com.spring.codeagenda.service.CreateCodeService;
 import com.spring.codeagenda.service.LoggerFileService;
 
+import javassist.NotFoundException;
+
 @Controller
 public class CodeagendaController {
 	
@@ -26,10 +27,6 @@ public class CodeagendaController {
 	CodeagendaService codeagendaService;
 	@Autowired
 	CreateCodeService createNewCode;
-	@Autowired
-	LoggerFileService loggerInfo;
-	
-	private final static Logger logger = Logger.getLogger(CodeagendaController.class.getName());
 	
 	@RequestMapping(value = "/pacientes", method = RequestMethod.GET)
 	public ModelAndView getPacientes() {
@@ -56,19 +53,51 @@ public class CodeagendaController {
 		return "pacienteForm";
 	}
 	
-	@RequestMapping(value = "/newpaciente", method = RequestMethod.POST)
+	@RequestMapping(value = "/editpaciente/{userId}", method = RequestMethod.GET)
+	public ModelAndView showPacienteForm(@PathVariable("userId") long userId) throws NotFoundException {
+		
+		ModelAndView mv = new ModelAndView("editPacienteForm");
+		
+		Paciente paciente = codeagendaService.findById(userId);
+		if(paciente == null) {
+			throw new NotFoundException("Not found user with ID " + userId);
+		}
+		
+		mv.addObject("paciente", paciente);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String savePaciente(@Valid Paciente paciente, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			loggerInfo.LogErrorFile(logger, result.getFieldErrors().toString());
+			LoggerFileService.logErrorFile(result.getFieldErrors().toString());
 			return "redirect:/pacientes";
 		}
 		
-		String novoCodigo = createNewCode.novoCodigo();
-		paciente.setCodigoPaciente(novoCodigo);
+		if(paciente.getId() == null) {
+			String novoCodigo = createNewCode.novoCodigo();
+			paciente.setCodigoPaciente(novoCodigo);
+		}
+
 		codeagendaService.save(paciente);
 		
 		return "redirect:/pacientes";
 	}
-
+	
+	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
+	public String deletePaciente(@PathVariable("userId") long userId) throws NotFoundException {
+		
+		Paciente paciente = codeagendaService.findById(userId);
+		
+		if(paciente == null) {
+			throw new NotFoundException("Not found user with ID " + userId);
+		}
+		
+		codeagendaService.delete(paciente);
+		
+		return "redirect:/pacientes";
+	}
+	
 }

@@ -9,5 +9,5 @@ public interface CodeagendaService {
 	List<Paciente> findAll();
 	Paciente findById(long id);
 	Paciente save(Paciente paciente);
-
+	void delete(Paciente paciente);
 }

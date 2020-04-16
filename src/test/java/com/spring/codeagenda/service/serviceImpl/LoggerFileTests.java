@@ -9,27 +9,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.spring.codeagenda.service.LoggerFileService;
+
 @SpringBootTest
 public class LoggerFileTests {
 	
-	private LoggerFileServiceImpl loggerFileImpl;
-	private final static Logger logger = Logger.getLogger("TestImplementation");
-	
-	@BeforeEach
-	public void LoggerInstacer() {
-		loggerFileImpl = new LoggerFileServiceImpl();
-	}
-	
 	@Test
 	public void createLogFile() {
-		loggerFileImpl.LogErrorFile(logger, "teste logging in a file");
+		LoggerFileService.logErrorFile("teste logging in a file");
 	}
 	
 	@Test
 	public void checkLogFileExists() {
 		String userDir = System.getProperty("user.dir");
 		
-		File file = new File(userDir + "/src/main/resources/logs/Log1585822540.log");
+		File file = new File(userDir + "/src/main/resources/logs/LogFile.log");
 		assertTrue(file.exists());
 	}
 

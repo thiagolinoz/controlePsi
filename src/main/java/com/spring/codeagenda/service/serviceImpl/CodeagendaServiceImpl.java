@@ -10,8 +10,8 @@ import com.spring.codeagenda.repository.CodeagendaRepository;
 import com.spring.codeagenda.service.CodeagendaService;
 
 @Service
-public class CodeagendaServiceImpl implements CodeagendaService{
-	
+public class CodeagendaServiceImpl implements CodeagendaService {
+
 	@Autowired
 	CodeagendaRepository codeagendaRepository;
 
@@ -28,6 +28,11 @@ public class CodeagendaServiceImpl implements CodeagendaService{
 	@Override
 	public Paciente save(Paciente paciente) {
 		return codeagendaRepository.save(paciente);
+	}
+
+	@Override
+	public void delete(Paciente paciente) {
+		codeagendaRepository.delete(paciente);
 	}
 
 }
