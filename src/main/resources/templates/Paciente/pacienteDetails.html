@@ -51,7 +51,7 @@
             <section>
             	<h2 class="card-title" style="font-weight: bold; margin-bottom: 20px;">Prontuario</h2>
                 <p class="card-text" style="margin-top: 40px;"><span th:utext="${paciente.prontuario}"></span></p>
-                <a th:href="${(#mvc.url('CC#showPacienteForm').arg(0, paciente.id)).build()}" class="btn btn-primary">Editar</a>
+                <a th:href="@{/editpaciente/{userId}(userId=${paciente.id})}" class="btn btn-primary">Editar</a>
                 <a th:href="@{/delete/{userId}(userId=${paciente.id})}" class="btn btn-primary">Deletar</a>
             </section>
         </article>

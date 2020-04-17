@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.spring.codeagenda.model.Paciente;
 
-public interface CodeagendaService {
+public interface PacienteService {
 	
 	List<Paciente> findAll();
 	Paciente findById(long id);

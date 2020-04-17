@@ -1,26 +1,24 @@
 package com.spring.codeagenda.service;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import org.springframework.stereotype.Component;
-
-import com.spring.codeagenda.controller.CodeagendaController;
-
-@Component
-public final class LoggerFileService{
+public abstract class LoggerFileService{
 	
 	private final static Logger logger = Logger.getLogger(LoggerFileService.class.getName());
-
-	public static void logErrorFile(String logContent) {
+	
+	public abstract String addPathToHandler();
+	
+	public void log(String logContent) {
 		String userDir = System.getProperty("user.dir");
+		
+		String filesName = addPathToHandler();
 
 		try {
-			FileHandler fileHandler = new FileHandler(userDir + "/src/main/resources/logs/LogFile.log", true);
+			FileHandler fileHandler = new FileHandler(userDir + "/src/main/resources/logs/"+ filesName +".log", true);
 			logger.addHandler(fileHandler);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileHandler.setFormatter(formatter);
@@ -33,5 +31,4 @@ public final class LoggerFileService{
 		}
 
 	}
-
 }

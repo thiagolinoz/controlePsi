@@ -16,7 +16,8 @@ public class LoggerFileTests {
 	
 	@Test
 	public void createLogFile() {
-		LoggerFileService.logErrorFile("teste logging in a file");
+		LoggerFileServiceImpl logFile = new LoggerFileServiceImpl();
+		logFile.log("teste logging in a file");
 	}
 	
 	@Test

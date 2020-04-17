@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.codeagenda.model.Paciente;
-import com.spring.codeagenda.repository.CodeagendaRepository;
-import com.spring.codeagenda.service.CodeagendaService;
+import com.spring.codeagenda.repository.PacienteRepository;
+import com.spring.codeagenda.service.PacienteService;
 
 @Service
-public class CodeagendaServiceImpl implements CodeagendaService {
+public class PacienteServiceImpl implements PacienteService {
 
 	@Autowired
-	CodeagendaRepository codeagendaRepository;
+	PacienteRepository codeagendaRepository;
 
 	@Override
 	public List<Paciente> findAll() {

@@ -9,14 +9,14 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.codeagenda.repository.CodeagendaRepository;
+import com.spring.codeagenda.repository.PacienteRepository;
 import com.spring.codeagenda.model.Paciente;
 
 @Component
 public class DummyData {
 	
 	@Autowired
-	CodeagendaRepository codeagendaRepository;
+	PacienteRepository codeagendaRepository;
 	
 	//@PostConstruct
 	public void savePaciente() {

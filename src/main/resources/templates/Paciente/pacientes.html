@@ -35,7 +35,7 @@
 		    	<span th:text="${paciente.email}"></span>
 		    </h5>
 		    <p class="card-text" th:utext="${#strings.abbreviate(paciente.prontuario, 400)}"></p>
-		    <a th:href="${(#mvc.url('CC#getPacienteDetails').arg(0, paciente.id)).build()}" class="btn btn-primary">Mais informações</a>
+		    <a th:href="@{/pacientes/{userId}(userId=${paciente.id})}" class="btn btn-primary">Mais informações</a>
 		  </div>
 		</div>
 	

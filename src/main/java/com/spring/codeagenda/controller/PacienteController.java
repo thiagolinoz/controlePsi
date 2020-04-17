@@ -14,25 +14,31 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.codeagenda.model.Paciente;
-import com.spring.codeagenda.service.CodeagendaService;
+import com.spring.codeagenda.service.PacienteService;
+import com.spring.codeagenda.service.serviceImpl.LoggerDebugFileServiceImpl;
+import com.spring.codeagenda.service.serviceImpl.LoggerFileServiceImpl;
 import com.spring.codeagenda.service.CreateCodeService;
 import com.spring.codeagenda.service.LoggerFileService;
 
 import javassist.NotFoundException;
 
 @Controller
-public class CodeagendaController {
+public class PacienteController {
 	
 	@Autowired
-	CodeagendaService codeagendaService;
+	PacienteService pacienteService;
 	@Autowired
 	CreateCodeService createNewCode;
+	@Autowired
+	LoggerFileServiceImpl loggerFile;
+	@Autowired
+	LoggerDebugFileServiceImpl logDebug;
 	
 	@RequestMapping(value = "/pacientes", method = RequestMethod.GET)
 	public ModelAndView getPacientes() {
 		
-		ModelAndView mv = new ModelAndView("pacientes");
-		List<Paciente> pacientes = codeagendaService.findAll();
+		ModelAndView mv = new ModelAndView("Paciente/pacientes");
+		List<Paciente> pacientes = pacienteService.findAll();
 		mv.addObject("pacientes", pacientes);
 		
 		return mv;
@@ -41,8 +47,8 @@ public class CodeagendaController {
 	@RequestMapping(value = "/pacientes/{id}", method = RequestMethod.GET)
 	public ModelAndView getPacienteDetails(@PathVariable("id") long id) {
 		
-		ModelAndView mv = new ModelAndView("pacienteDetails");
-		Paciente paciente = codeagendaService.findById(id);
+		ModelAndView mv = new ModelAndView("Paciente/pacienteDetails");
+		Paciente paciente = pacienteService.findById(id);
 		mv.addObject("paciente", paciente);
 		
 		return mv;
@@ -50,15 +56,15 @@ public class CodeagendaController {
 	
 	@RequestMapping(value = "/newpaciente", method = RequestMethod.GET)
 	public String getPacienteForm() {
-		return "pacienteForm";
+		return "Paciente/pacienteForm";
 	}
 	
 	@RequestMapping(value = "/editpaciente/{userId}", method = RequestMethod.GET)
 	public ModelAndView showPacienteForm(@PathVariable("userId") long userId) throws NotFoundException {
 		
-		ModelAndView mv = new ModelAndView("editPacienteForm");
+		ModelAndView mv = new ModelAndView("Paciente/editPacienteForm");
 		
-		Paciente paciente = codeagendaService.findById(userId);
+		Paciente paciente = pacienteService.findById(userId);
 		if(paciente == null) {
 			throw new NotFoundException("Not found user with ID " + userId);
 		}
@@ -72,7 +78,7 @@ public class CodeagendaController {
 	public String savePaciente(@Valid Paciente paciente, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			LoggerFileService.logErrorFile(result.getFieldErrors().toString());
+			loggerFile.log(result.getFieldErrors().toString());
 			return "redirect:/pacientes";
 		}
 		
@@ -81,7 +87,7 @@ public class CodeagendaController {
 			paciente.setCodigoPaciente(novoCodigo);
 		}
 
-		codeagendaService.save(paciente);
+		pacienteService.save(paciente);
 		
 		return "redirect:/pacientes";
 	}
@@ -89,13 +95,13 @@ public class CodeagendaController {
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
 	public String deletePaciente(@PathVariable("userId") long userId) throws NotFoundException {
 		
-		Paciente paciente = codeagendaService.findById(userId);
+		Paciente paciente = pacienteService.findById(userId);
 		
 		if(paciente == null) {
 			throw new NotFoundException("Not found user with ID " + userId);
 		}
 		
-		codeagendaService.delete(paciente);
+		pacienteService.delete(paciente);
 		
 		return "redirect:/pacientes";
 	}
