@@ -14,11 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.codeagenda.model.Paciente;
-import com.spring.codeagenda.service.PacienteService;
-import com.spring.codeagenda.service.serviceImpl.LoggerDebugFileServiceImpl;
-import com.spring.codeagenda.service.serviceImpl.LoggerFileServiceImpl;
 import com.spring.codeagenda.service.CreateCodeService;
-import com.spring.codeagenda.service.LoggerFileService;
+import com.spring.codeagenda.service.PacienteService;
 
 import javassist.NotFoundException;
 
@@ -29,10 +26,6 @@ public class PacienteController {
 	PacienteService pacienteService;
 	@Autowired
 	CreateCodeService createNewCode;
-	@Autowired
-	LoggerFileServiceImpl loggerFile;
-	@Autowired
-	LoggerDebugFileServiceImpl logDebug;
 	
 	@RequestMapping(value = "/pacientes", method = RequestMethod.GET)
 	public ModelAndView getPacientes() {
@@ -78,7 +71,6 @@ public class PacienteController {
 	public String savePaciente(@Valid Paciente paciente, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			loggerFile.log(result.getFieldErrors().toString());
 			return "redirect:/pacientes";
 		}
 		

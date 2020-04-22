@@ -2,13 +2,14 @@ package com.spring.codeagenda.service.serviceImpl;
 
 import com.spring.codeagenda.service.LoggerFileService;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class LoggerDebugFileServiceImpl extends LoggerFileService{
+public class LoggerDebugFileServiceImpl{
 	
-	public String addPathToHandler() {
-		return "LogDebugFile";
+	private String fileName;
+	
+	public void log(String logContent){
+		fileName = "LogDebugFile";
+		LoggerFileService loggerFileService = new LoggerFileService();
+		loggerFileService.logIn(logContent, fileName);
 	}
-
+	
 }

@@ -1,31 +1,35 @@
 package com.spring.codeagenda.service.serviceImpl;
 
-import java.io.File;
-import java.util.logging.Logger;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.spring.codeagenda.service.LoggerFileService;
-
 @SpringBootTest
 public class LoggerFileTests {
 	
-	@Test
-	public void createLogFile() {
-		LoggerFileServiceImpl logFile = new LoggerFileServiceImpl();
-		logFile.log("teste logging in a file");
+	public String userDir;
+	
+	@BeforeEach
+	public void getUserDir() {
+		userDir = System.getProperty("user.dir");
 	}
 	
 	@Test
-	public void checkLogFileExists() {
-		String userDir = System.getProperty("user.dir");
-		
-		File file = new File(userDir + "/src/main/resources/logs/LogFile.log");
-		assertTrue(file.exists());
+	public void createLogFile() {
+		LoggerFileServiceImpl logDebug = new LoggerFileServiceImpl();
+		logDebug.log("teste file 0");
+		logDebug.log("teste file 1");
+		logDebug.log("teste file 2");
+		logDebug.log("teste file 3");
+	}
+
+	@Test
+	public void createLogDebugFile() {
+		LoggerDebugFileServiceImpl logDebug = new LoggerDebugFileServiceImpl();
+		logDebug.log("teste debug file 0");
+		logDebug.log("teste debug file 1");
+		logDebug.log("teste debug file 2");
+		logDebug.log("teste debug file 3");
 	}
 
 }

@@ -6,24 +6,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public abstract class LoggerFileService{
-	
-	private final static Logger logger = Logger.getLogger(LoggerFileService.class.getName());
-	
-	public abstract String addPathToHandler();
-	
-	public void log(String logContent) {
-		String userDir = System.getProperty("user.dir");
+import org.springframework.stereotype.Service;
+
+@Service
+public class LoggerFileService{
+
+	private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 		
-		String filesName = addPathToHandler();
+	public void logIn(String logContent, String filesName) {
+		String userDir = System.getProperty("user.dir");
 
 		try {
 			FileHandler fileHandler = new FileHandler(userDir + "/src/main/resources/logs/"+ filesName +".log", true);
-			logger.addHandler(fileHandler);
+			
 			SimpleFormatter formatter = new SimpleFormatter();
 			fileHandler.setFormatter(formatter);
-			
-			logger.log(Level.INFO, logContent);
+			LOGGER.addHandler(fileHandler);
+			LOGGER.log(Level.INFO, logContent);
+			fileHandler.close();
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
