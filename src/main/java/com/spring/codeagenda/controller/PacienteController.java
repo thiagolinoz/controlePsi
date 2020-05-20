@@ -38,11 +38,16 @@ public class PacienteController {
 	}
 	
 	@RequestMapping(value = "/pacientes/{id}", method = RequestMethod.GET)
-	public ModelAndView getPacienteDetails(@PathVariable("id") long id) {
+	public ModelAndView getPacienteDetails(@PathVariable("id") long id) throws NotFoundException {
 		
 		ModelAndView mv = new ModelAndView("Paciente/pacienteDetails");
-		Paciente paciente = pacienteService.findById(id);
-		mv.addObject("paciente", paciente);
+		
+		try {
+			Paciente paciente = pacienteService.findById(id);
+			mv.addObject("paciente", paciente);
+		} catch (Exception exception) {
+			mv.setViewName("notFound");
+		} 
 		
 		return mv;
 	}
@@ -57,12 +62,12 @@ public class PacienteController {
 		
 		ModelAndView mv = new ModelAndView("Paciente/editPacienteForm");
 		
-		Paciente paciente = pacienteService.findById(userId);
-		if(paciente == null) {
-			throw new NotFoundException("Not found user with ID " + userId);
-		}
-		
-		mv.addObject("paciente", paciente);
+		try {
+			Paciente paciente = pacienteService.findById(userId);
+			mv.addObject("paciente", paciente);
+		} catch (Exception exception) {
+			mv.setViewName("notFound");
+		} 
 		
 		return mv;
 	}
@@ -87,13 +92,12 @@ public class PacienteController {
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
 	public String deletePaciente(@PathVariable("userId") long userId) throws NotFoundException {
 		
-		Paciente paciente = pacienteService.findById(userId);
-		
-		if(paciente == null) {
-			throw new NotFoundException("Not found user with ID " + userId);
+		try {
+			Paciente paciente = pacienteService.findById(userId);
+			pacienteService.delete(paciente);
+		} catch (Exception e) {
+			return "redirect:/notFound";
 		}
-		
-		pacienteService.delete(paciente);
 		
 		return "redirect:/pacientes";
 	}
