@@ -72,24 +72,39 @@ public class PacienteController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/pacientes", method = RequestMethod.POST)
 	public String savePaciente(@Valid Paciente paciente, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
 			return "redirect:/pacientes";
 		}
 		
-		if(paciente.getId() == null) {
-			String novoCodigo = createNewCode.novoCodigo();
-			paciente.setCodigoPaciente(novoCodigo);
-		}
+		String novoCodigo = createNewCode.novoCodigo();
+		paciente.setCodigoPaciente(novoCodigo);
 
 		pacienteService.save(paciente);
 		
 		return "redirect:/pacientes";
 	}
 	
-	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/pacientes", method = RequestMethod.PUT)
+	public String savePaciente(@PathVariable("userId") long userId, @Valid Paciente paciente, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "redirect:/pacientes";
+		}
+		
+		try {
+			pacienteService.save(paciente);
+		} catch (Exception e){
+			return "redirect:/notFound";
+		}
+		
+		
+		return "redirect:/pacientes";
+	}
+	
+	@RequestMapping(value = "/pacientes/{userId}", method = RequestMethod.DELETE)
 	public String deletePaciente(@PathVariable("userId") long userId) throws NotFoundException {
 		
 		try {
