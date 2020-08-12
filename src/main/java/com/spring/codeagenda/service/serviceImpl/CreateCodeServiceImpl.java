@@ -7,9 +7,11 @@ import com.spring.codeagenda.repository.PacienteRepository;
 import com.spring.codeagenda.service.CreateCodeService;
 import com.spring.codeagenda.utils.GenerateCodeHelper;
 
+import javassist.NotFoundException;
+
 @Component
 public class CreateCodeServiceImpl implements CreateCodeService {
-	
+	String ultimoCodigoNaBase;
 	@Autowired
 	PacienteRepository codeagendaRepository;
 	@Autowired
@@ -17,11 +19,13 @@ public class CreateCodeServiceImpl implements CreateCodeService {
 
 	@Override
 	public String novoCodigo() {
-		
-		String ultimoCodigoNaBase = codeagendaRepository.findByLastPacienteCode();
-		
+		ultimoCodigoNaBase = codeagendaRepository.findByLastPacienteCode();
+		if (ultimoCodigoNaBase == null) {
+			ultimoCodigoNaBase = "A0";
+		}
+	
 		String novoCodigo = generateCode.sumNumberInString(ultimoCodigoNaBase);
-		
+
 		return novoCodigo;
 	}
 
