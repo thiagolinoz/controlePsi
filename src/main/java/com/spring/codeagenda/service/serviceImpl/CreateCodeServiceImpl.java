@@ -7,8 +7,6 @@ import com.spring.codeagenda.repository.PacienteRepository;
 import com.spring.codeagenda.service.CreateCodeService;
 import com.spring.codeagenda.utils.GenerateCodeHelper;
 
-import javassist.NotFoundException;
-
 @Component
 public class CreateCodeServiceImpl implements CreateCodeService {
 	String ultimoCodigoNaBase;
