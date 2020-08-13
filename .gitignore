@@ -39,3 +39,5 @@ build/
 ### ignore logs folders
 /src/main/resources/logs/
 
+# ignore dummy data
+/src/main/java/com/spring/codeagenda/utils/DummyData.java
