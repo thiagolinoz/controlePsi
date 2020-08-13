@@ -1,5 +1,15 @@
-Este primeira etapa do projeto realiza o cadastro de pacientes e suas infos por um administrador da plataforma.
+### _POC_ - Prova de conceito de um projeto para cadastro de pacientes. 
 
-WIP
+Aqui implementei um CRUD através de formulários, nesta primeira etapa, além de logs para um  monitoração simples da aplicação.
+O intuito foi fixar os conhecimentos adquiridos com Spring, JUnit e Mockito.
 
-A plataforma foi construida utilizando a linguagem Java. O framework Spring. E para persistência de dados o PostgreSQL.
+## As tecnologias usadas:
+ - Java 8
+ - Spring Boot
+ - JUnit
+ - Mockito
+ - Thymeleaf
+ - PostgreSQL
+
+## Como testar:
+Heroku - 
