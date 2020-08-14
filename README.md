@@ -10,6 +10,8 @@ O intuito foi fixar os conhecimentos adquiridos com Spring, JUnit e Mockito.
  - Mockito
  - Thymeleaf
  - PostgreSQL
+ - Bootstrap
 
 ## Como testar:
-Heroku - 
+Heroku - https://controle-psi.herokuapp.com/pacientes
+
